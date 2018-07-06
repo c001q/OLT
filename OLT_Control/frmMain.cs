@@ -23,36 +23,46 @@ namespace OLT_Control
         {
             try
             {
-                if(telnet == null) 
+                if (telnet == null)
                     telnet = new Telnet();
 
                 string strIpAddress = txtIPAddress.Text;
                 int intPort = Convert.ToInt16(txtPort.Text);
+                string strReceiveText;
 
                 telnet.Connect(strIpAddress, intPort);
 
                 if (telnet.Connected == true)
                 {
-                    richtxtLogInfo.AppendText("服务器 " + strIpAddress + ":" + intPort + " 连接成功。\r\n"  );
-                    richtxtLogInfo.AppendText(telnet.WaitFor("login:"));
-                    telnet.Send("cq");
-                    richtxtLogInfo.AppendText(telnet.WaitFor("password:"));
-                    telnet.Send("windows001");
-                    richtxtLogInfo.AppendText(telnet.WaitFor(">"));
-                    telnet.Send("dir");
-                    richtxtLogInfo.AppendText(telnet.WaitFor(">"));
-                    telnet.Send("cd Favorites");
-                    richtxtLogInfo.AppendText(telnet.WaitFor(">"));
-                    telnet.Send("dir");
-                    richtxtLogInfo.AppendText(telnet.WaitFor(">"));
+                    richtxtLogInfo.AppendText("\r\n服务器 " + strIpAddress + ":" + intPort + " 连接成功。\r\n");
+                    richtxtLogInfo.AppendText(telnet.WaitFor("Username:"));
+                    telnet.Send("yykdzx");
+                    richtxtLogInfo.AppendText(telnet.WaitFor("Password:"));
+                    telnet.Send("yydx@189.cn");
+                    richtxtLogInfo.AppendText(telnet.WaitFor("#"));
+
+                    telnet.Send("show running-config interface epon-olt_1/4/2");
+                    strReceiveText = telnet.WaitFor(new string[] { "#", "More" });
+                    richtxtLogInfo.AppendText(strReceiveText);
+
+                    telnet.Send(" ");
+                    strReceiveText = telnet.WaitFor(new string[] { "#", "More" });
+                    richtxtLogInfo.AppendText(strReceiveText);
+
+                    telnet.Send(" ");
+                    strReceiveText = telnet.WaitFor(new string[] { "#", "More" });
+                    richtxtLogInfo.AppendText(strReceiveText);
+
+                    telnet.Send(" ");
+                    strReceiveText = telnet.WaitFor(new string[] { "#", "More" });
+                    richtxtLogInfo.AppendText(strReceiveText);
+
                 }
 
-                telnet.Close();
-                telnet = null;
             }
             catch (Exception exc)
             {
-                richtxtLogInfo.AppendText(exc.Message);
+                richtxtLogInfo.AppendText("\r\n" + exc.Message);
             }
         }
 
@@ -62,12 +72,15 @@ namespace OLT_Control
             {
                 telnet.Close();
                 telnet = null;
+                richtxtLogInfo.AppendText("\r\n============================================");
+                richtxtLogInfo.AppendText("\r\nTcp/IP连接关闭！");
+                richtxtLogInfo.AppendText("\r\n============================================");
             }
-            catch(NullReferenceException)
+            catch (NullReferenceException)
             {
-                richtxtLogInfo.AppendText("与telnet服务器连接已经关闭，不需要再次关闭!\r\n");
+                richtxtLogInfo.AppendText("\r\n与telnet服务器连接已经关闭，不需要再次关闭!");
             }
-            
+
         }
 
         private void butClean_Click(object sender, EventArgs e)
