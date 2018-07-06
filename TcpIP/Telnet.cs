@@ -147,7 +147,7 @@ namespace TcpIP.Telnet
                 {
                     bolConnected = false;
                 }
-                
+
             }
             catch (ArgumentNullException)
             {
@@ -223,6 +223,68 @@ namespace TcpIP.Telnet
                     // 如果包含了指定字符，就可以退出等待
                     if (strReturnText.Contains(WaitText))
                         return strReturnText;
+                }
+
+                return "";
+            }
+            catch (Exception e)
+            {
+                throw new Exception("服务器无法返回你所期待的消息。原因是：" + e.Message);
+            }
+
+
+
+        }
+        public string WaitFor(string[] WaitText)
+        {
+
+            byte[] byeRead;
+            ArrayList al = new ArrayList();
+            string strReturnText;
+            Encoding e1 = Encoding.GetEncoding(936);
+
+
+
+
+            // byte[] byeSent = new byte[]{};
+            // List<byte> listSent = new List<byte>(byeSent);   
+
+            try
+            {
+                while (WaitData() > 0)
+                {
+                    // 提取Tcp缓冲区的数据
+                    byeRead = new byte[client.Available];
+                    stream.Read(byeRead, 0, byeRead.Length);
+
+
+                    if (IsContainIAC(byeRead))
+                    {
+                        // 如果数据中包含了IAC字符，就进行Telnet协商后，再返回字符串                        
+                        al.AddRange(HandleTelnetOption(byeRead));
+                    }
+                    else
+                    {
+                        // 如果数据中没有IAC字符，就直接返回字符串                       
+                        al.AddRange(byeRead);
+
+                    }
+
+                    byte[] byeText = (byte[])al.ToArray(typeof(byte));
+
+                    strReturnText = new string(e1.GetChars(byeText));
+                    ;
+
+                    // 如果包含了指定字符，就可以退出等待
+
+                    foreach (string str in WaitText)
+                    {
+                        if (strReturnText.Contains(str))
+                            return strReturnText;
+                    }
+
+
+
                 }
 
                 return "";
@@ -438,10 +500,20 @@ namespace TcpIP.Telnet
                 intReceiveTimeOut = value;
             }
         }
-        public bool Send(string sendText)
+        public bool Send(string sendText, bool sendEnter = true)
         {
             byte[] byeSendText;
-            byeSendText = System.Text.Encoding.ASCII.GetBytes(sendText + "\r\n");
+
+            if (sendEnter == true)
+            {
+                byeSendText = System.Text.Encoding.ASCII.GetBytes(sendText + "\r\n");
+            }
+            else
+            {
+                byeSendText = System.Text.Encoding.ASCII.GetBytes(sendText);
+            }
+
+
             stream.Write(byeSendText, 0, byeSendText.Length);
             return true;
         }
