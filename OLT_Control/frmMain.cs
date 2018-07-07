@@ -43,19 +43,7 @@ namespace OLT_Control
 
                     telnet.Send("show running-config interface epon-olt_1/4/2");
                     strReceiveText = telnet.WaitFor(new string[] { "#", "More" });
-                    richtxtLogInfo.AppendText(strReceiveText);
-
-                    telnet.Send(" ");
-                    strReceiveText = telnet.WaitFor(new string[] { "#", "More" });
-                    richtxtLogInfo.AppendText(strReceiveText);
-
-                    telnet.Send(" ");
-                    strReceiveText = telnet.WaitFor(new string[] { "#", "More" });
-                    richtxtLogInfo.AppendText(strReceiveText);
-
-                    telnet.Send(" ");
-                    strReceiveText = telnet.WaitFor(new string[] { "#", "More" });
-                    richtxtLogInfo.AppendText(strReceiveText);
+                    richtxtLogInfo.AppendText(strReceiveText);                
 
                 }
 
@@ -91,6 +79,14 @@ namespace OLT_Control
         private void frmMain_Load(object sender, EventArgs e)
         {
 
+        }
+
+        private void butSend_Click(object sender, EventArgs e)
+        {
+            string strReceiveText;
+            telnet.Send(txtSendData.Text,false);
+            strReceiveText = telnet.WaitFor(new string[] { "#", "More" });
+            richtxtLogInfo.AppendText(strReceiveText);
         }
     }
 }

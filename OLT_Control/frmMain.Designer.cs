@@ -36,6 +36,9 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.butClean = new System.Windows.Forms.Button();
+            this.txtSendData = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.butSend = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // butConnect
@@ -72,7 +75,7 @@
             this.txtIPAddress.Name = "txtIPAddress";
             this.txtIPAddress.Size = new System.Drawing.Size(136, 21);
             this.txtIPAddress.TabIndex = 3;
-            this.txtIPAddress.Text = "192.168.1.112";
+            this.txtIPAddress.Text = "134.185.20.18";
             // 
             // txtPort
             // 
@@ -110,11 +113,40 @@
             this.butClean.UseVisualStyleBackColor = true;
             this.butClean.Click += new System.EventHandler(this.butClean_Click);
             // 
+            // txtSendData
+            // 
+            this.txtSendData.Location = new System.Drawing.Point(458, 28);
+            this.txtSendData.Name = "txtSendData";
+            this.txtSendData.Size = new System.Drawing.Size(136, 21);
+            this.txtSendData.TabIndex = 8;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(458, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 12);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "要发送数据：";
+            // 
+            // butSend
+            // 
+            this.butSend.Location = new System.Drawing.Point(601, 25);
+            this.butSend.Name = "butSend";
+            this.butSend.Size = new System.Drawing.Size(75, 23);
+            this.butSend.TabIndex = 10;
+            this.butSend.Text = "发送";
+            this.butSend.UseVisualStyleBackColor = true;
+            this.butSend.Click += new System.EventHandler(this.butSend_Click);
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(783, 371);
+            this.Controls.Add(this.butSend);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.txtSendData);
             this.Controls.Add(this.butClean);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -141,6 +173,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button butClean;
+        private System.Windows.Forms.TextBox txtSendData;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button butSend;
 
     }
 }

@@ -103,6 +103,7 @@
     <Compile Include="frmZTENoAvailablePort.Designer.cs">
       <DependentUpon>frmZTENoAvailablePort.cs</DependentUpon>
     </Compile>
+    <Compile Include="ZTEOlt.cs" />
     <Compile Include="ZTXCmd.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
