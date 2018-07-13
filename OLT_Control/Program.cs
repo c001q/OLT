@@ -15,7 +15,8 @@ namespace OLT_Control
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new frmMain());
+            Application.Run(new frmZTENoAvailablePort());
+            // Application.Run(new frmMain());
         }
     }
 }

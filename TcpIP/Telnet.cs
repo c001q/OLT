@@ -155,11 +155,11 @@ namespace TcpIP.Telnet
             }
             catch (ArgumentOutOfRangeException)
             {
-                throw new Exception("port 参数不在 MinPort 和 MaxPort 之间。");
+                throw new ArgumentOutOfRangeException("port 参数不在 MinPort 和 MaxPort 之间。");
             }
             catch (ObjectDisposedException)
             {
-                throw new Exception("TcpClient 被关闭。");
+                throw new Exception("TcpClient 被关闭。");                
             }
             catch (SocketException e)
             {
