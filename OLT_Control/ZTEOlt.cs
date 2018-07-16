@@ -23,16 +23,15 @@ namespace OLT_Control.OltCmd
                 _sIPAddress = IPAddress;
                 _sUserName = UserName;
                 _sPassWord = PassWord;
-                _intPort = Port;                
+                _intPort = Port;
                 
                 _telnet = new Telnet();
 
                 Login(_sUserName, _sPassWord);
         }
 
-        public string[,] GetOfflineOnus(string frame, string card, string port)
+        public ArrayList GetOfflineOnus(string frame, string card, string port)
         {
-
             string[,] sOlts = new string[,] { { } };
             string[,] sCloseOlts = new string[,] { { } };
             string sReceive = "";
@@ -44,12 +43,7 @@ namespace OLT_Control.OltCmd
             int iRowsCount = 0;
             int iColCount = 6;
 
-          
-
-
-
-            // 运行 show running-config interface 指令
-            
+            // 运行 show running-config interface 指令            
             _telnet.Send("show running-config interface epon-olt_" + 
                 frame + "/" + 
                 card + "/" + 
@@ -72,7 +66,6 @@ namespace OLT_Control.OltCmd
             iRowsCount= matches.Count;
             sOlts = new string[iRowsCount, iColCount];
             
-
             foreach (Match match in matches)
             {
                 sMatchValue = match.Value;
@@ -84,11 +77,9 @@ namespace OLT_Control.OltCmd
                 iRowIndex++;
             }
 
-
             // 把结果加入到日志中,并清空
             _sLog += sReceive;
             sReceive = "";
-
 
             // 运行 show onu all-status 指令
             _telnet.Send("show onu all-status epon-olt_" + 
@@ -122,11 +113,9 @@ namespace OLT_Control.OltCmd
 
                 iRowIndex++;
             }
-
-            
+                        
             ArrayList arrayList = new ArrayList();
             
-
             // 提取关闭的端口
             for (int i = 0; i < iRowsCount; i++)
             {
@@ -138,16 +127,18 @@ namespace OLT_Control.OltCmd
                   arrayList.Add(sOlts[i, 3]);
                   arrayList.Add(sOlts[i, 4]);
                   arrayList.Add(sOlts[i, 5]);
-                    
                 }
             }
 
-            sOlts = (string[])arrayList;
-
-
-            return sOlts;
+            return arrayList;
         }
 
+        public string DeleteOnu()
+        {
+
+            return "";
+        }
+        
         public string Log
         {
             get 
@@ -184,7 +175,15 @@ namespace OLT_Control.OltCmd
             _sLog += sReturn;
 
             return sReturn;
-        }       
+        }
+
+        private string Close()
+        {
+            string sQuitInfo = "";
+            
+            
+            return sQuitInfo;
+        }
        
     }
 

@@ -40,7 +40,6 @@ namespace OLT_Control
                 
                 for (int i = 0;i <= strCellText.Length-1;i++)
                     dgvOltList.Rows[intRowCellIndex].Cells[i].Value = strCellText[i];
-
             }
 
             
